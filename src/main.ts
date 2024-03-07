@@ -1,11 +1,10 @@
 import { ValidationPipe } from '@nestjs/common';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
-
-import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './common/exceptions/all-exceptions.filter';
-import { HttpLoggingInterceptor } from './common/interceptors/http-logging.interceptor';
-import { CustomLogger } from './common/log/custom-logger';
+import { AppModule } from '@src/app.module';
+import { AllExceptionsFilter } from '@src/common/exceptions/all-exceptions.filter';
+import { HttpLoggingInterceptor } from '@src/common/interceptors/http-logging.interceptor';
+import { CustomLogger } from '@src/common/log/custom-logger';
 
 const corsOptions: CorsOptions = {
     origin: ['http://localhost:3000'],

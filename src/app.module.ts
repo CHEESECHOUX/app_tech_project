@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AppController } from '@src/app.controller';
+import { AppService } from '@src/app.service';
 import * as Joi from 'joi';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 @Module({
     imports: [

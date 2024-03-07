@@ -1,4 +1,4 @@
-import { CustomHttpStatusCodes } from './custom-http-status-codes.enum';
+import { CustomHttpStatusCodes } from '@src/common/exceptions/custom-http-status-codes.enum';
 
 // CustomStatusMessages 객체가 CustomHttpStatusCodes 열거형의 각 값에 대해 문자열 또는 특정 함수를 속성 값으로 가질 수 있는 타입을 정의
 export const CustomHttpMessages: { [key in CustomHttpStatusCodes]?: string | ((detail?: string) => string) } = {
