@@ -1,0 +1,19 @@
+# .prettierignore
+# 시스템 디렉터리 파일
+**/.git
+**/.svn
+**/.hg
+
+**/node_modules
+
+# 버전 관리 파일
+**/package.json
+**/package-lock.json
+
+# Docker 관련 파일
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# GitHub Actions 관련 파일
+.github/
