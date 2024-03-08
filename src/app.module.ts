@@ -5,6 +5,7 @@ import { AppController } from '@src/app.controller';
 import { AppService } from '@src/app.service';
 import * as Joi from 'joi';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { UsersModule } from './users/users.module';
 
 @Module({
     imports: [
@@ -34,6 +35,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
                 timezone: 'Z', // UTC 시간대
             }),
         }),
+        UsersModule,
     ],
     controllers: [AppController],
     providers: [AppService],
