@@ -42,11 +42,11 @@ export class CashRecordDetail {
         type: 'timestamp',
         comment: '생성 날짜',
     })
-    createdTime: Date;
+    createdAt: Date;
 
     @Column({
         type: 'timestamp',
         comment: '생성 날짜',
     })
-    expiredTime: Date;
+    expiredAt: Date;
 }

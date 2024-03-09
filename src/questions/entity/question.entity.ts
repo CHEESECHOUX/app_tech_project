@@ -1,8 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-@Unique(['email'])
-export class User {
+export class Question {
     @PrimaryGeneratedColumn({
         type: 'int',
         comment: 'PK',
@@ -10,29 +9,34 @@ export class User {
     id: number;
 
     @Column({
-        type: 'int',
-        comment: '사용자의 캐시 잔액',
-        default: 0,
+        type: 'varchar',
+        comment: '이메일',
     })
-    cash: number;
+    title: string;
 
     @Column({
         type: 'varchar',
         comment: '이메일',
     })
-    email: string;
+    answer: string;
 
     @Column({
         type: 'varchar',
-        comment: '비밀번호',
+        comment: '이메일',
     })
-    password: string;
+    quantity: number;
 
     @Column({
         type: 'varchar',
-        comment: '이름',
+        comment: '이메일',
     })
-    name: string;
+    type: string;
+
+    @Column({
+        type: 'varchar',
+        comment: '이메일',
+    })
+    mid: string;
 
     @CreateDateColumn({
         type: 'timestamp',
