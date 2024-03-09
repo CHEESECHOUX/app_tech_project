@@ -1,9 +1,10 @@
-import { Body, Controller, Param, ParseIntPipe, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Param, ParseIntPipe, Patch } from '@nestjs/common';
 import { UsersService } from '@src/users/users.service';
 import { CustomResponse } from '@src/common/interfaces/custom-response.interface';
 import { UpdateUserRequestDTO } from '@src/users/dto/update-user-request.dto';
-import { UpdateUserResponseDTO } from './dto/update-user-response.dto';
+import { UpdateUserResponseDTO } from '@src/users/dto/update-user-response.dto';
 import { ApiBody, ApiOkResponse, ApiOperation, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { CustomDeleteResponse } from '@src/common/interfaces/custom-delete-response.interface';
 
 /*
 1. 회원정보 수정
@@ -43,5 +44,13 @@ export class UsersController {
         @Body() updateUserRequestDto: UpdateUserRequestDTO,
     ): Promise<CustomResponse<UpdateUserResponseDTO>> {
         return this.usersService.updateUser(id, updateUserRequestDto);
+    }
+
+    /**
+     * 회원 탈퇴
+     */
+    @Delete(':id')
+    async deleteFeed(@Param('id', ParseIntPipe) id: number): Promise<CustomDeleteResponse> {
+        return this.usersService.deleteUser(id);
     }
 }

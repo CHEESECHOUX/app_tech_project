@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 @Unique(['email'])
@@ -46,10 +46,9 @@ export class User {
     })
     updatedAt: Date;
 
-    @Column({
-        type: 'boolean',
-        comment: '삭제 여부',
-        default: false,
+    @DeleteDateColumn({
+        type: 'timestamp',
+        comment: '삭제 날짜',
     })
-    isDeleted: Boolean;
+    deletedAt: Boolean;
 }

@@ -101,4 +101,17 @@ export class UsersRepository {
 
         return { id, email, password, name };
     }
+
+    async deleteById(id: number): Promise<number> {
+        const rawQuery = `
+            UPDATE user AS u
+            SET deleted_at = NOW()
+            WHERE u.id = ?
+        `;
+
+        const result = await this.repository.query(rawQuery, [id]);
+        const deletedRowsCount = result.changedRows;
+
+        return deletedRowsCount;
+    }
 }
