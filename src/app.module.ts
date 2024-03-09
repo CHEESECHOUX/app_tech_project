@@ -7,7 +7,8 @@ import * as Joi from 'joi';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { UsersModule } from '@src/users/users.module';
 import { CashModule } from '@src/cash/cash.module';
-import { QuestionsModule } from './questions/questions.module';
+import { QuestionsModule } from '@src/questions/questions.module';
+import { AuthModule } from '@src/auth/auth.module';
 
 @Module({
     imports: [
@@ -40,6 +41,7 @@ import { QuestionsModule } from './questions/questions.module';
         UsersModule,
         CashModule,
         QuestionsModule,
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],
