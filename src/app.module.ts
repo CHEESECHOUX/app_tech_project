@@ -5,6 +5,10 @@ import { AppController } from '@src/app.controller';
 import { AppService } from '@src/app.service';
 import * as Joi from 'joi';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { UsersModule } from '@src/users/users.module';
+import { CashModule } from '@src/cash/cash.module';
+import { QuestionsModule } from '@src/questions/questions.module';
+import { AuthModule } from '@src/auth/auth.module';
 
 @Module({
     imports: [
@@ -34,6 +38,10 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
                 timezone: 'Z', // UTC 시간대
             }),
         }),
+        UsersModule,
+        CashModule,
+        QuestionsModule,
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],
