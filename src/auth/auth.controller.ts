@@ -7,6 +7,10 @@ import { AuthService } from '@src/auth/auth.service';
 import { LocalLoginRequestDTO } from '@src/auth/dto/local-login-request.dto';
 import { LocalLoginResponseDTO } from '@src/auth/dto/local-login-response.dto';
 
+/*
+1. 회원가입(이메일, 비밀번호)
+2. 로그인
+*/
 @Controller('auth')
 @ApiTags('사용자 인증 API')
 export class AuthController {
@@ -18,11 +22,11 @@ export class AuthController {
     @ApiOperation({
         summary: '자체(local) 로그인 인증 api',
         description: `
-              1. 필수 입력 값
-                  - email, password
-                  - 사용자의 email, password가 Database에 저장된 값과 동일하면 인증 성공
-              2. Redis에 세션 저장
-                  - 세션 유효 기간: 24시간
+            1. 필수 입력 값
+                - email, password
+                - 사용자의 email, password가 Database에 저장된 값과 동일하면 인증 성공
+            2. Redis에 세션 저장
+                - 세션 유효 기간: 24시간
           `,
     })
     @ApiBody({
@@ -30,9 +34,9 @@ export class AuthController {
     })
     @ApiOkResponse({
         description: `
-              - statusCode: 200
-              - message: "성공"
-              - data: { LocalLoginResponseDTO }
+            - statusCode: 200
+            - message: "성공"
+            - data: { LocalLoginResponseDTO }
           `,
         type: LocalLoginResponseDTO,
     })
