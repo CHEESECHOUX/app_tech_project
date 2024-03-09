@@ -5,6 +5,7 @@ import { AppModule } from '@src/app.module';
 import { AllExceptionsFilter } from '@src/common/exceptions/all-exceptions.filter';
 import { HttpLoggingInterceptor } from '@src/common/interceptors/http-logging.interceptor';
 import { CustomLogger } from '@src/common/log/custom-logger';
+import { swaggerDocumentation } from '@src/config/swagger.documentation';
 
 const corsOptions: CorsOptions = {
     origin: ['http://localhost:3000'],
@@ -17,6 +18,12 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule, {
         logger: new CustomLogger(),
     });
+
+    app.setGlobalPrefix('api');
+
+    if (process.env.NODE_ENV === 'development') {
+        await swaggerDocumentation(app);
+    }
 
     app.useGlobalFilters(new AllExceptionsFilter());
 
