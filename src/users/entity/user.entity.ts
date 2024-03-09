@@ -11,7 +11,8 @@ export class User {
 
     @Column({
         type: 'int',
-        comment: '현금',
+        comment: '사용자의 캐시 잔액',
+        default: 0,
     })
     cash: number;
 
