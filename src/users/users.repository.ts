@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './entity/user.entity';
+import { User } from '@src/users/entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { LocalSignupResponseDTO } from '@src/auth/dto/local-signup-response.dto';
 import { LocalSignupRequestDTO } from '@src/auth/dto/local-signup-request.dto';
+import { convertToCamelCase } from '@src/common/utils/formatting.utils';
 
 @Injectable()
 export class UsersRepository {
@@ -47,6 +48,12 @@ export class UsersRepository {
         const result = await this.repository.query(rawQuery, [email]);
 
         const user = result[0];
-        return user;
+
+        if (user) {
+            const camelCaseUser = convertToCamelCase(user);
+            return camelCaseUser;
+        } else {
+            return user;
+        }
     }
 }
