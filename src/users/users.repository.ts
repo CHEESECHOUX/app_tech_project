@@ -29,4 +29,24 @@ export class UsersRepository {
 
         return { id, email, name };
     }
+
+    async findOneByEmail(email: string): Promise<User> {
+        const rawQuery = `
+            SELECT
+                u.id,
+                u.email,
+                u.password,
+                u.name,
+                u.cash,
+                u.created_at
+            FROM user AS u
+            WHERE u.email = ?
+            LIMIT 1
+        `;
+
+        const result = await this.repository.query(rawQuery, [email]);
+
+        const user = result[0];
+        return user;
+    }
 }
