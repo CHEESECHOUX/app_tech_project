@@ -1,5 +1,5 @@
 export const enum CustomHttpStatusCodes {
-    OK = 200,
+    OK = 0,
     CREATED = 201, // 새로운 리소스 생성
     ACCEPTED = 202, // 요청은 접수 되었지만, 처리는 완료되지 않음
     NON_AUTHORITATIVE_INFORMATION = 203, // 요청이 성공적으로 수행 되었으나, 요청에 대한 검증이 되지 않음

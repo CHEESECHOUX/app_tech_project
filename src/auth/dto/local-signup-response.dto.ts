@@ -1,19 +1,19 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class LocalSignupRequestDTO {
+export class LocalSignupResponseDTO {
+    @ApiProperty({ description: 'PK' })
     @IsNotEmpty()
     @IsNumber()
     id: number;
 
+    @ApiProperty({ description: '이메일' })
     @IsNotEmpty()
     @IsEmail()
     email: string;
 
-    @IsNotEmpty()
+    @ApiProperty({ description: '이름' })
+    @IsOptional()
     @IsString()
-    password: string;
-
-    @IsNotEmpty()
-    @IsString()
-    name: string;
+    name?: string;
 }

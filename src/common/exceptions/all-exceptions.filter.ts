@@ -18,7 +18,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
             const customMessage = exception.customMessage;
 
             const responseBody = {
-                statusCode: customStatusCode,
+                code: customStatusCode,
                 message: customMessage,
                 timestamp: new Date().toISOString(),
                 path: req.url,
