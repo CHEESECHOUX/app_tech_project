@@ -114,4 +114,23 @@ export class UsersRepository {
 
         return deletedRowsCount;
     }
+
+    async awardCashForUser(userId: number, questionPoint: number): Promise<User> {
+        const rawQuery = `
+            UPDATE user AS u
+            SET cash = u.cash + ?
+            WHERE u.id = ?
+        `;
+
+        const result = await this.repository.query(rawQuery, [questionPoint, userId]);
+
+        const user = result[0];
+
+        if (user) {
+            const camelCaseUser = convertToCamelCase(user);
+            return camelCaseUser;
+        } else {
+            return user;
+        }
+    }
 }

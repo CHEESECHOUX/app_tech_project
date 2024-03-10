@@ -49,11 +49,7 @@ export class QuestionsController {
         @Param('userId') userId: number,
         @Body() submitQuestionRequestDTO: SubmitQuestionRequestDTO,
     ): Promise<CustomResponse<SubmitQuestionResponseDTO>> {
-        // 정답 or 오답 처리 로직
-        const submitQuestion = await this.questionsService.submitQuestion(submitQuestionRequestDTO);
-
-        // 질문 제출에 대한 캐시 보상
-        // const awardCashForQuestion = await this.cashService.awardCashForQuestion(userId);
+        const submitQuestion = await this.questionsService.submitQuestion(userId, submitQuestionRequestDTO);
 
         return submitQuestion;
     }
