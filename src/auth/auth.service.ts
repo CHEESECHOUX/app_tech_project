@@ -57,7 +57,7 @@ export class AuthService {
     async localLogin(localLoginRequestDTO: LocalLoginRequestDTO): Promise<CustomResponse<LocalLoginResponseDTO>> {
         const { email, password } = localLoginRequestDTO;
         // 이메일로 사용자 찾기
-        const user = await this.usersRepository.findOneByEmail(email);
+        const user = await this.usersRepository.findUserByEmail(email);
 
         if (!user) {
             const errorMessage = CustomHttpMessages[CustomHttpStatusCodes.BAD_REQUEST];

@@ -33,7 +33,7 @@ export class UsersRepository {
         return { id, email, name };
     }
 
-    async findOneByEmail(email: string): Promise<User> {
+    async findUserByEmail(email: string): Promise<User> {
         const rawQuery = `
             SELECT
                 u.id,
@@ -59,7 +59,7 @@ export class UsersRepository {
         }
     }
 
-    async findOneById(id: number): Promise<User> {
+    async findUserById(id: number): Promise<User> {
         const user = await this.repository.createQueryBuilder('user').where('user.id = :id', { id }).getOne();
         return user;
     }
@@ -113,5 +113,24 @@ export class UsersRepository {
         const deletedRowsCount = result.changedRows;
 
         return deletedRowsCount;
+    }
+
+    async awardCashForUser(userId: number, questionPoint: number): Promise<User> {
+        const rawQuery = `
+            UPDATE user AS u
+            SET cash = u.cash + ?
+            WHERE u.id = ?
+        `;
+
+        const result = await this.repository.query(rawQuery, [questionPoint, userId]);
+
+        const user = result[0];
+
+        if (user) {
+            const camelCaseUser = convertToCamelCase(user);
+            return camelCaseUser;
+        } else {
+            return user;
+        }
     }
 }

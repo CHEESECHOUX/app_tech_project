@@ -21,12 +21,14 @@ export class CashRecordDetail {
     status: string;
 
     @Column({
+        name: 'user_id',
         type: 'int',
         comment: '사용자 pk',
     })
     userId: number;
 
     @Column({
+        name: 'cash_record_id',
         type: 'int',
         comment: '현금 사용 기록 pk',
     })

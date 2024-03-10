@@ -3,6 +3,14 @@ import { CustomHttpStatusCodes } from '@src/common/exceptions/custom-http-status
 // CustomStatusMessages 객체가 CustomHttpStatusCodes 열거형의 각 값에 대해 문자열 또는 특정 함수를 속성 값으로 가질 수 있는 타입을 정의
 export const CustomHttpMessages: { [key in CustomHttpStatusCodes]?: string | ((detail?: string) => string) } = {
     [CustomHttpStatusCodes.OK]: '성공',
+    [CustomHttpStatusCodes.ERROR]: (detail: string = 'DEFAULT') => {
+        const details = {
+            DEFAULT: '에러',
+            NO_CONTENT: '조회 가능한 데이터가 없습니다',
+            INCORRECT_ANSWER: '오답입니다',
+        };
+        return details[detail];
+    },
     [CustomHttpStatusCodes.CREATED]: '새로운 리소스 생성 완료 ',
     [CustomHttpStatusCodes.ACCEPTED]: '요청은 접수 되었지만, 처리는 완료되지 않음',
     [CustomHttpStatusCodes.NON_AUTHORITATIVE_INFORMATION]: '요청이 성공적으로 수행 되었으나, 요청에 대한 검증이 되지 않음',

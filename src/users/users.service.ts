@@ -13,7 +13,7 @@ export class UsersService {
 
     async updateUser(id: number, updateUserRequestDTO: UpdateUserRequestDTO): Promise<CustomResponse<UpdateUserResponseDTO>> {
         try {
-            const user = await this.usersRepository.findOneById(id);
+            const user = await this.usersRepository.findUserById(id);
             if (!user) {
                 throw new Error('user를 찾을 수 없습니다');
             }
