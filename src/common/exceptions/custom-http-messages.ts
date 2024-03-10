@@ -7,6 +7,7 @@ export const CustomHttpMessages: { [key in CustomHttpStatusCodes]?: string | ((d
         const details = {
             DEFAULT: '에러',
             NO_CONTENT: '조회 가능한 데이터가 없습니다',
+            INCORRECT_ANSWER: '오답입니다',
         };
         return details[detail];
     },

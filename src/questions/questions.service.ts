@@ -4,6 +4,8 @@ import { AvailableQuestionsResponseDTO } from '@src/questions/dto/available-ques
 import { CustomResponse } from '@src/common/interfaces/custom-response.interface';
 import { CustomHttpStatusCodes } from '@src/common/exceptions/custom-http-status-codes.enum';
 import { CustomHttpMessages } from '@src/common/exceptions/custom-http-messages';
+import { SubmitQuestionRequestDTO } from '@src/questions/dto/submit-question-request.dto';
+import { SubmitQuestionResponseDTO } from '@src/questions/dto/submit-question-response.dto';
 
 @Injectable()
 export class QuestionsService {
@@ -33,5 +35,51 @@ export class QuestionsService {
             message: CustomHttpMessages[CustomHttpStatusCodes.OK],
             data: questions,
         };
+    }
+
+    async submitQuestion(submitQuestionRequestDTO: SubmitQuestionRequestDTO): Promise<CustomResponse<SubmitQuestionResponseDTO>> {
+        const question = await this.questionsRepository.findQuestionById(submitQuestionRequestDTO.questionId);
+        let isCorrect = false;
+
+        switch (question.type) {
+            // 타입 1과 2는 입력값이 answer값과 일치하는지 확인
+            case '1':
+            case '2':
+                isCorrect = submitQuestionRequestDTO.answer === question.answer;
+                break;
+            // 타입 3은 입력값이 question title 뒤에 "a"가 추가된 값과 같은지 확인
+            case '3':
+                isCorrect = submitQuestionRequestDTO.answer === question.title + 'a';
+                break;
+        }
+
+        if (isCorrect) {
+            // 정답 처리
+            return {
+                code: CustomHttpStatusCodes.OK,
+                message: CustomHttpMessages[CustomHttpStatusCodes.OK],
+                data: {
+                    questionId: question.id,
+                    title: question.title,
+                    answer: question.answer,
+                    point: question.point,
+                    type: question.type,
+                    mid: question.type,
+                },
+            };
+        } else {
+            // 오답 처리
+            const errorMessageFunction = CustomHttpMessages[CustomHttpStatusCodes.ERROR] as (detail?: string) => string;
+            const errorMessage = errorMessageFunction('INCORRECT_ANSWER');
+
+            return {
+                code: CustomHttpStatusCodes.ERROR,
+                message: errorMessage,
+                data: {
+                    questionId: question.id,
+                    providedAnswer: submitQuestionRequestDTO.answer, // 사용자가 제출했던 정답
+                },
+            };
+        }
     }
 }

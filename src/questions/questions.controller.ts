@@ -1,7 +1,9 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CustomResponse } from '@src/common/interfaces/custom-response.interface';
 import { QuestionsService } from '@src/questions/questions.service';
 import { AvailableQuestionsResponseDTO } from '@src/questions/dto/available-questions-response.dto';
+import { SubmitQuestionRequestDTO } from '@src/questions/dto/submit-question-request.dto';
+import { SubmitQuestionResponseDTO } from '@src/questions/dto/submit-question-response.dto';
 
 /* 1. Question 조회
     ** 문제 참여 기준
@@ -29,10 +31,30 @@ import { AvailableQuestionsResponseDTO } from '@src/questions/dto/available-ques
 export class QuestionsController {
     constructor(private readonly questionsService: QuestionsService) {}
 
+    /**
+     * 사용자의 조건에 맞는 문제 3개 조회
+     */
     @Get('/available/:userId')
     async findAvailableQuestions(
         @Param('userId') userId: number,
     ): Promise<CustomResponse<AvailableQuestionsResponseDTO | AvailableQuestionsResponseDTO[]>> {
         return this.questionsService.findAvailableQuestions(userId);
+    }
+
+    /**
+     * QuestionId의 정답 제출 시 해당 유저에게 캐시 지급
+     */
+    @Post('/submit/:userId')
+    async submitQuestion(
+        @Param('userId') userId: number,
+        @Body() submitQuestionRequestDTO: SubmitQuestionRequestDTO,
+    ): Promise<CustomResponse<SubmitQuestionResponseDTO>> {
+        // 정답 or 오답 처리 로직
+        const submitQuestion = await this.questionsService.submitQuestion(submitQuestionRequestDTO);
+
+        // 질문 제출에 대한 캐시 보상
+        // const awardCashForQuestion = await this.cashService.awardCashForQuestion(userId);
+
+        return submitQuestion;
     }
 }

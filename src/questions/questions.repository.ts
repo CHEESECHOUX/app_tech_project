@@ -12,6 +12,11 @@ export class QuestionsRepository {
         this.repository = dataSource.getRepository(Question);
     }
 
+    async findQuestionById(QuestionId: number): Promise<Question> {
+        const question = await this.repository.createQueryBuilder('question').where('question.id = :id', { id: QuestionId }).getOne();
+        return question;
+    }
+
     async findAvailableQuestions(userId: number, startOfDay: string): Promise<AvailableQuestionsResponseDTO | AvailableQuestionsResponseDTO[]> {
         console.log('startOfDay 확인', startOfDay);
 

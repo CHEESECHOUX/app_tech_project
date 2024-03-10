@@ -33,7 +33,7 @@ export class UsersRepository {
         return { id, email, name };
     }
 
-    async findOneByEmail(email: string): Promise<User> {
+    async findUserByEmail(email: string): Promise<User> {
         const rawQuery = `
             SELECT
                 u.id,
@@ -59,7 +59,7 @@ export class UsersRepository {
         }
     }
 
-    async findOneById(id: number): Promise<User> {
+    async findUserById(id: number): Promise<User> {
         const user = await this.repository.createQueryBuilder('user').where('user.id = :id', { id }).getOne();
         return user;
     }
