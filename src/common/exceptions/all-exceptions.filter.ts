@@ -46,7 +46,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
             }
 
             const responseBody = {
-                statusCode: status,
+                code: status,
                 ...response, // 스프레드 연산자를 사용하여 responseBody 객체의 최상위 레벨에 추가
                 timestamp: new Date().toISOString(),
                 path: req.url,
