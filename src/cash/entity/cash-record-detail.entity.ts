@@ -15,7 +15,7 @@ export class CashRecordDetail {
     amount: number;
 
     @Column({
-        type: 'int',
+        type: 'varchar',
         comment: '현금 상태 (ex: add | min | expired) ',
     })
     status: string;
@@ -48,7 +48,7 @@ export class CashRecordDetail {
 
     @Column({
         type: 'timestamp',
-        comment: '생성 날짜',
+        comment: '만료 날짜',
     })
     expiredAt: Date;
 }
