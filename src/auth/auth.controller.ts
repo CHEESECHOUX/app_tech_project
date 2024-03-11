@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LocalSignupResponseDTO } from '@src/auth/dto/local-signup-response.dto';
 import { LocalSignupRequestDTO } from '@src/auth/dto/local-signup-request.dto';
 import { CustomResponse } from '@src/common/interfaces/custom-response.interface';
@@ -34,14 +34,14 @@ export class AuthController {
     })
     @ApiOkResponse({
         description: `
-            - statusCode: 200
+            - code: 0
             - message: "성공"
             - data: { LocalLoginResponseDTO }
           `,
         type: LocalLoginResponseDTO,
     })
-    @ApiUnauthorizedResponse({
-        description: '인증 실패 : 에러 발생 일시, 에러 메시지, status code를 반환',
+    @ApiBadRequestResponse({
+        description: '실패 : 에러 발생 일시, 에러 메시지, code 반환',
     })
     @Post('login')
     async login(@Body() localLoginRequestDTO: LocalLoginRequestDTO): Promise<CustomResponse<LocalLoginResponseDTO>> {
@@ -69,7 +69,7 @@ export class AuthController {
         type: LocalSignupResponseDTO,
     })
     @ApiBadRequestResponse({
-        description: '인증 실패 : 에러 발생 일시, 에러 메시지, statusCode를 반환',
+        description: '실패 : 에러 발생 일시, 에러 메시지, code 반환',
     })
     @Post('register')
     async register(@Body() localSignupRequestDTO: LocalSignupRequestDTO): Promise<CustomResponse<LocalSignupResponseDTO>> {

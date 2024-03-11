@@ -48,8 +48,8 @@ export class UsersService {
                 message: CustomHttpMessages[CustomHttpStatusCodes.OK],
             };
         } catch (error) {
-            console.error('feed 삭제 에러: ', error);
-            throw new Error('feed 삭제 에러: ' + error.message);
+            console.error('user 삭제 에러: ', error);
+            throw new Error('user 삭제 에러: ' + error.message);
         }
     }
 }

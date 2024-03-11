@@ -3,7 +3,7 @@ import { UsersService } from '@src/users/users.service';
 import { CustomResponse } from '@src/common/interfaces/custom-response.interface';
 import { UpdateUserRequestDTO } from '@src/users/dto/update-user-request.dto';
 import { UpdateUserResponseDTO } from '@src/users/dto/update-user-response.dto';
-import { ApiBody, ApiOkResponse, ApiOperation, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { CustomDeleteResponse } from '@src/common/interfaces/custom-delete-response.interface';
 
 /*
@@ -29,14 +29,14 @@ export class UsersController {
     })
     @ApiOkResponse({
         description: `
-            - statusCode: 200
+            - code: 0
             - message: "성공"
             - data: { UpdateUserResponseDTO }
         `,
         type: UpdateUserResponseDTO,
     })
-    @ApiUnauthorizedResponse({
-        description: '인증 실패 : 에러 발생 일시, 에러 메시지, status code를 반환',
+    @ApiBadRequestResponse({
+        description: '실패 : 에러 발생 일시, 에러 메시지, code를 반환',
     })
     @Patch(':id')
     async updateUser(
@@ -49,8 +49,25 @@ export class UsersController {
     /**
      * 회원 탈퇴
      */
+    @ApiOperation({
+        summary: '회원 탈퇴 api',
+        description: `
+                - param으로 전달받은 id에 해당하는 user를 소프트 삭제 처리
+                - deleted_at 컬럼에 탈퇴 날짜 및 시간 저장
+            `,
+    })
+    @ApiOkResponse({
+        description: `
+                - code: 0
+                - message: "성공"
+            `,
+        type: UpdateUserResponseDTO,
+    })
+    @ApiBadRequestResponse({
+        description: '실패 : 에러 발생 일시, 에러 메시지, code를 반환',
+    })
     @Delete(':id')
-    async deleteFeed(@Param('id', ParseIntPipe) id: number): Promise<CustomDeleteResponse> {
+    async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<CustomDeleteResponse> {
         return this.usersService.deleteUser(id);
     }
 }

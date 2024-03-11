@@ -23,17 +23,12 @@ export class HttpLoggingInterceptor implements NestInterceptor {
                             body,
                         },
                         response: {
-                            // custom으로 만든 statusCode를 넘겨주고 있어서 주석처리
-                            // statusCode: httpContext.getResponse().statusCode,
                             data,
                         },
                     }),
                 );
 
-                return {
-                    response: data,
-                    // response: { statusCode: httpContext.getResponse().statusCode },
-                };
+                return data;
             }),
         );
     }
