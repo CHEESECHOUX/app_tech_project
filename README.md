@@ -9,7 +9,6 @@
 - 실제 데이터베이스 테이블 간에는 외래 키(FK) 연결이 설정되어 있지 않지만, 이해를 돕기 위해 ERD 상에서는 외래 키로 표현했습니다.
 ![app_tech2](https://github.com/CHEESECHOUX/app_tech_project/assets/89918678/48645540-55c3-4ce8-bfe7-f33821451a5f)
 <br>
-<br>
 
 # 📡 API
 ### [API Documentation](https://documenter.getpostman.com/view/20782433/2sA2xiWC7M)
@@ -56,6 +55,9 @@
 6. Question의 정답 제출 시 유저에게 캐시 지급
 7. 유저의 캐시 지급 내역 저장
 8. 테스트 코드 : Question에 새로운 타입이 추가되어 정답 처리하는 로직이 수정되었을 경우, 모든 타입의 Question의 정답 처리가 정상적으로 되는지 확인
+<img width="394" alt="스크린샷 2024-03-12 오전 1 12 53" src="https://github.com/CHEESECHOUX/app_tech_project/assets/89918678/fb131de4-2616-4fb1-bf49-1ea3c9cb0554">
+
+<br>
 
 - 6, 7번은 하나의 메서드에 구현했습니다.
 
