@@ -6,7 +6,7 @@
 <br>
 
 # 🛠 ERD 및 테이블 구조
-- 실제 데이터베이스 테이블 간에는 외래 키(FK) 연결이 설정되어 있지 않지만, 이해를 돕기 위해 ERD 상에서는 외래 키로 표현했습니다.
+- 실제 데이터베이스 테이블 간에는 외래 키(FK) 연결 설정이 되어 있지 않지만, 이해를 돕기 위해 ERD 상에서는 외래 키가 연결된 것으로 표현했습니다.
 ![app_tech2](https://github.com/CHEESECHOUX/app_tech_project/assets/89918678/48645540-55c3-4ce8-bfe7-f33821451a5f)
 <br>
 
@@ -47,19 +47,45 @@
 <br>
 
 # 🙌🏻 구현한 기능
-1. 회원가입(이메일, 비밀번호)
-2. 로그인
-3. 회원정보수정
-4. 회원탈퇴
-5. Question 목록 조회
-6. Question의 정답 제출 시 유저에게 캐시 지급
-7. 유저의 캐시 지급 내역 저장
-8. 테스트 코드 : Question에 새로운 타입이 추가되어 정답 처리하는 로직이 수정되었을 경우, 모든 타입의 Question의 정답 처리가 정상적으로 되는지 확인
+### 1. 회원가입(이메일, 비밀번호)
+- 필수값 : email, password
+<br>
+
+### 2. 로그인
+- 유저의 email, password가 Database에 저장된 값과 동일하면 인증 성공
+<br>
+
+### 3. 회원정보수정
+- 수정 가능 값: email, password, name
+- 유저가 마이페이지에서 자신의 정보를 수정하는 api 기준으로 코드 작성
+- cash는 마이페이지에서 수정 불가
+<br>
+
+### 4. 회원탈퇴
+- Soft delete
+- 회원 탈퇴 시, User 테이블의 deleted_at 컬럼에 해당 날짜 및 시간을 저장
+<br>
+
+### 5. Question 목록 조회
+- 유저의 ID를 userId 매개변수로 받아, 해당 유저의 조건에 만족하는 문제 3개를 조회
+<br>
+
+### 6. Question의 정답 제출 시 유저에게 캐시 지급
+- 유저가 제출한 정답이 Question 테이블의 answer 컬럼 값과 같을 경우, Question 테이블의 point 컬럼 값을 User 테이블의 cash 컬럼에 저장
+<br>
+
+### 7. 유저의 캐시 지급 내역 저장
+-  유저에게 캐시 지급한 내역을 Cash Record, Cash Record Detail 테이블에 저장
+<br>
+
+### 8. 테스트 코드 : Question에 새로운 타입이 추가되어 정답 처리하는 로직이 수정되었을 경우, 모든 타입의 Question의 정답 처리가 정상적으로 되는지 확인
 <img width="394" alt="스크린샷 2024-03-12 오전 1 12 53" src="https://github.com/CHEESECHOUX/app_tech_project/assets/89918678/fb131de4-2616-4fb1-bf49-1ea3c9cb0554">
 
 <br>
+<br>
+<br>
 
-- 6, 7번은 하나의 메서드에 구현했습니다.
+6, 7번은 하나의 메서드에 구현했습니다.
 
 <br>
 <br>
