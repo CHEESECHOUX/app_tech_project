@@ -3,7 +3,7 @@ import { CustomHttpException } from '@src/common/exceptions/custom-http-exceptio
 import { CustomHttpMessages } from '@src/common/exceptions/custom-http-messages';
 import { CustomHttpStatusCodes } from '@src/common/exceptions/custom-http-status-codes.enum';
 import { LocalSignupResponseDTO } from '@src/auth/dto/local-signup-response.dto';
-import { CustomResponse } from '@src/common/interfaces/custom-response.interface';
+import { CustomDataResponse } from '@src/common/interfaces/custom-response.interface';
 import { LocalSignupRequestDTO } from '@src/auth/dto/local-signup-request.dto';
 import { UsersRepository } from '@src/users/users.repository';
 import * as bcrypt from 'bcrypt';
@@ -17,7 +17,7 @@ export class AuthService {
     /**
      * 자체 회원가입
      */
-    async register(localSignupRequestDTO: LocalSignupRequestDTO): Promise<CustomResponse<LocalSignupResponseDTO>> {
+    async register(localSignupRequestDTO: LocalSignupRequestDTO): Promise<CustomDataResponse<LocalSignupResponseDTO>> {
         try {
             const { password } = localSignupRequestDTO;
 
@@ -54,35 +54,40 @@ export class AuthService {
     /**
      * 자체 로그인
      */
-    async localLogin(localLoginRequestDTO: LocalLoginRequestDTO): Promise<CustomResponse<LocalLoginResponseDTO>> {
-        const { email, password } = localLoginRequestDTO;
-        // 이메일로 사용자 찾기
-        const user = await this.usersRepository.findUserByEmail(email);
+    async localLogin(localLoginRequestDTO: LocalLoginRequestDTO): Promise<CustomDataResponse<LocalLoginResponseDTO>> {
+        try {
+            const { email, password } = localLoginRequestDTO;
+            // 이메일로 유저 찾기
+            const user = await this.usersRepository.findUserByEmail(email);
 
-        if (!user) {
-            const errorMessage = CustomHttpMessages[CustomHttpStatusCodes.BAD_REQUEST];
-            throw new CustomHttpException(errorMessage, CustomHttpStatusCodes.BAD_REQUEST);
+            if (!user) {
+                const errorMessage = CustomHttpMessages[CustomHttpStatusCodes.BAD_REQUEST];
+                throw new CustomHttpException(errorMessage, CustomHttpStatusCodes.BAD_REQUEST);
+            }
+
+            // 비밀번호 검증
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                const errorMessage = CustomHttpMessages[CustomHttpStatusCodes.UNAUTHORIZED];
+                throw new CustomHttpException(errorMessage, CustomHttpStatusCodes.UNAUTHORIZED);
+            }
+
+            // 비밀번호를 제외한 유저 정보 반환
+            const { password: _, ...result } = user;
+
+            return {
+                code: CustomHttpStatusCodes.OK,
+                message: CustomHttpMessages[CustomHttpStatusCodes.OK],
+                data: {
+                    id: result.id,
+                    email: result.email,
+                    name: result.name,
+                    cash: result.cash,
+                },
+            };
+        } catch (error) {
+            console.error('local 로그인 에러: ', error);
+            throw new Error('local 로그인 에러: ' + error);
         }
-
-        // 비밀번호 검증
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            const errorMessage = CustomHttpMessages[CustomHttpStatusCodes.UNAUTHORIZED];
-            throw new CustomHttpException(errorMessage, CustomHttpStatusCodes.UNAUTHORIZED);
-        }
-
-        // 비밀번호를 제외한 사용자 정보 반환
-        const { password: _, ...result } = user;
-
-        return {
-            code: CustomHttpStatusCodes.OK,
-            message: CustomHttpMessages[CustomHttpStatusCodes.OK],
-            data: {
-                id: result.id,
-                email: result.email,
-                name: result.name,
-                cash: result.cash,
-            },
-        };
     }
 }

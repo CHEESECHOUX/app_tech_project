@@ -22,7 +22,7 @@ export class CashRecord {
 
     @Column({
         type: 'int',
-        comment: '사용자 pk',
+        comment: '유저 PK',
     })
     userId: number;
 

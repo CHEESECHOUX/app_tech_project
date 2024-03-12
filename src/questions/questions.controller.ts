@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CustomResponse } from '@src/common/interfaces/custom-response.interface';
+import { CustomDataResponse } from '@src/common/interfaces/custom-response.interface';
 import { QuestionsService } from '@src/questions/questions.service';
 import { AvailableQuestionsResponseDTO } from '@src/questions/dto/available-questions-response.dto';
 import { SubmitQuestionRequestDTO } from '@src/questions/dto/submit-question-request.dto';
@@ -14,7 +14,7 @@ export class QuestionsController {
     constructor(private readonly questionsService: QuestionsService) {}
 
     /**
-     * Question 목록 조회 (사용자의 조건에 맞는 문제 3개 조회)
+     * Question 목록 조회 (해당 유저의 조건에 맞는 문제 3개 조회)
      */
     @ApiOperation({
         summary: 'Question 목록 조회 api',
@@ -22,9 +22,9 @@ export class QuestionsController {
             param userId로 전달 받은 user의 조건에 맞는 문제 3개 조회
 
             * 문제 참여 기준
-            - 타입 1: 사용자당 동일한 mid의 문제를 하루에 한 번
-            - 타입 2: 사용자당 동일한 mid값의 문제를 3시간에 한 번
-            - 타입 3: 사용자당 동일한 mid값의 문제를 기간에 관계 없이 한 번
+            - 타입 1: user당 동일한 mid의 문제를 하루에 한 번
+            - 타입 2: user당 동일한 mid값의 문제를 3시간에 한 번
+            - 타입 3: user당 동일한 mid값의 문제를 기간에 관계 없이 한 번
 
             * question 조건
             문제들은 동일한 mid값을 가질 수 있음
@@ -48,7 +48,7 @@ export class QuestionsController {
     @Get('/available/:userId')
     async findAvailableQuestions(
         @Param('userId') userId: number,
-    ): Promise<CustomResponse<AvailableQuestionsResponseDTO | AvailableQuestionsResponseDTO[]>> {
+    ): Promise<CustomDataResponse<AvailableQuestionsResponseDTO | AvailableQuestionsResponseDTO[]>> {
         return this.questionsService.findAvailableQuestions(userId);
     }
 
@@ -86,7 +86,7 @@ export class QuestionsController {
     async submitQuestion(
         @Param('userId') userId: number,
         @Body() submitQuestionRequestDTO: SubmitQuestionRequestDTO,
-    ): Promise<CustomResponse<SubmitQuestionResponseDTO>> {
+    ): Promise<CustomDataResponse<SubmitQuestionResponseDTO>> {
         const submitQuestion = await this.questionsService.submitQuestion(userId, submitQuestionRequestDTO);
 
         return submitQuestion;
