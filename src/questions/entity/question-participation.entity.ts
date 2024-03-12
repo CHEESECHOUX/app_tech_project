@@ -15,20 +15,20 @@ export class QuestionParticipation {
     type: string;
 
     @Column({
-        type: 'int',
+        type: 'varchar',
         comment: '식별자(ex: 경제, 역사, 연예, 광고)',
     })
     mid: string;
 
     @Column({
-        type: 'int',
+        type: 'timestamp',
         comment: '참여 날짜 및 시간',
     })
     participatedAt: Date;
 
     @Column({
         type: 'int',
-        comment: '사용자 PK',
+        comment: '유저 PK',
     })
     userId: number;
 

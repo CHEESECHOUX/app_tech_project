@@ -22,7 +22,7 @@ export class Question {
 
     @Column({
         type: 'int',
-        comment: '문제 참여 가능 수량', // 사용자가 문제 참여 시 차감 & 매일 리셋
+        comment: '문제 참여 가능 수량', // 유저가 문제 참여 시 차감 & 매일 리셋
     })
     quantity: number;
 

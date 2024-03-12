@@ -18,11 +18,9 @@ export class QuestionsRepository {
     }
 
     async findAvailableQuestions(userId: number, startOfDay: string): Promise<AvailableQuestionsResponseDTO | AvailableQuestionsResponseDTO[]> {
-        console.log('startOfDay 확인', startOfDay);
-
-        // 타입 1: 사용자당 동일한 mid의 문제를 하루에 한 번
-        // 타입 2: 사용자당 동일한 mid값의 문제를 3시간에 한 번
-        // 타입 3: 사용자당 동일한 mid값의 문제를 기간에 관계 없이 한 번
+        // 타입 1: user당 동일한 mid의 문제를 하루에 한 번
+        // 타입 2: user당 동일한 mid값의 문제를 3시간에 한 번
+        // 타입 3: user당 동일한 mid값의 문제를 기간에 관계 없이 한 번
         const rawQuery = `
         SELECT q.*, COUNT(qp.id) AS participationCount
         FROM question q
@@ -58,7 +56,6 @@ export class QuestionsRepository {
         `;
 
         const questions = await this.repository.query(rawQuery, [userId, userId, userId, userId]);
-        console.log('questions 확인', questions);
 
         if (questions) {
             const camelCaseQuestions = questions.map(question => convertToCamelCase(question));

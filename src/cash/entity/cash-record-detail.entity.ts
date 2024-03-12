@@ -23,20 +23,20 @@ export class CashRecordDetail {
     @Column({
         name: 'user_id',
         type: 'int',
-        comment: '사용자 pk',
+        comment: '유저 PK',
     })
     userId: number;
 
     @Column({
         name: 'cash_record_id',
         type: 'int',
-        comment: '현금 사용 기록 pk',
+        comment: '현금 사용 기록 PK',
     })
     cashRecordId: number;
 
     @Column({
         type: 'int',
-        comment: '현금 사용 기록 디테일 pk',
+        comment: '현금 사용 기록 디테일 PK',
     })
     cashRecordDetailId: number;
 

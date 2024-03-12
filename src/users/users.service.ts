@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from '@src/users/users.repository';
 import { UpdateUserRequestDTO } from './dto/update-user-request.dto';
-import { CustomResponse } from '@src/common/interfaces/custom-response.interface';
+import { CustomDataResponse, CustomResponse } from '@src/common/interfaces/custom-response.interface';
 import { CustomHttpStatusCodes } from '@src/common/exceptions/custom-http-status-codes.enum';
 import { CustomHttpMessages } from '@src/common/exceptions/custom-http-messages';
 import { UpdateUserResponseDTO } from '@src/users/dto/update-user-response.dto';
-import { CustomDeleteResponse } from '@src/common/interfaces/custom-delete-response.interface';
 
 @Injectable()
 export class UsersService {
     constructor(private readonly usersRepository: UsersRepository) {}
 
-    async updateUser(id: number, updateUserRequestDTO: UpdateUserRequestDTO): Promise<CustomResponse<UpdateUserResponseDTO>> {
+    async updateUser(id: number, updateUserRequestDTO: UpdateUserRequestDTO): Promise<CustomDataResponse<UpdateUserResponseDTO>> {
         try {
             const user = await this.usersRepository.findUserById(id);
             if (!user) {
@@ -36,7 +35,7 @@ export class UsersService {
         }
     }
 
-    async deleteUser(id: number): Promise<CustomDeleteResponse> {
+    async deleteUser(id: number): Promise<CustomResponse> {
         try {
             const deletedRowsCount = await this.usersRepository.deleteById(id);
             if (deletedRowsCount === 0) {

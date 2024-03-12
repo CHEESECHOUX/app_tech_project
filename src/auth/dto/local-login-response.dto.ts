@@ -17,7 +17,7 @@ export class LocalLoginResponseDTO {
     @IsString()
     name: string;
 
-    @ApiProperty({ description: '사용자의 캐시 잔액' })
+    @ApiProperty({ description: '유저의 캐시 잔액' })
     @IsNotEmpty()
     @IsString()
     cash: number;
